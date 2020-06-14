@@ -1,11 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-<h1>This is a  Home page</h1>
 
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+    <h1>This is a  Home page</h1>
+
+    {% for post in posts %}
+
+
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a href="#" class="mr-2">{{ post.author }}</a>
+                    <small class="text-muted">{{ post.published_date }}</small>
+                </div>
+                <h2><a href="#" class="article-title">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
+
+
+
+    {% endfor %}
+{% endblock content %}
