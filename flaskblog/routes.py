@@ -1,5 +1,6 @@
 import os
 import secrets
+from PIL import Image
 from flask import render_template, url_for,flash, redirect, request
 from flaskblog import app, db, bcrypt
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateProfileForm
@@ -75,7 +76,11 @@ def save_picture(form_picture):
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
-    form_picture.save(picture_path)
+    
+    output_size = (125,125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
 
     return picture_fn
 
@@ -98,3 +103,5 @@ def profile():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('profile.html', title="Profile", image_file=image_file, form=form)
+
+
